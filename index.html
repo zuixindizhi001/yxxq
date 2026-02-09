@@ -14,15 +14,15 @@
     <link href="css/index.css" rel="stylesheet"> 
     <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/clipboard.min.js"></script>
     <style>
-        /* 布局居中处理 */
+        /* 页面居中布局 */
         .panel-content { display: flex; justify-content: center; }
         .panel-left { width: 100%; max-width: 550px; }
 
-        /* --- 调整：保存收藏背景色（改为深色调） --- */
+        /* 顶部导航提醒：深色玻璃拟态 */
         .nav-notice {
-            background: rgba(255, 255, 255, 0.05); /* 半透明背景 */
-            backdrop-filter: blur(10px); /* 毛玻璃效果 */
-            border: 1px solid rgba(138, 43, 226, 0.4); /* 暗紫色边框 */
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(138, 43, 226, 0.3);
             color: white;
             padding: 20px;
             border-radius: 15px;
@@ -30,77 +30,100 @@
             text-align: center;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
         }
-        .nav-notice p { margin: 0; font-size: 13px; color: #ccc; }
         .nav-notice strong {
             display: block;
             font-size: 26px;
             margin: 8px 0;
-            color: #fff;
             text-shadow: 0 0 10px rgba(138, 43, 226, 0.8);
             letter-spacing: 1px;
         }
         .btn-copy-nav {
-            background: #6a5acd; /* 柔和的紫色 */
+            background: #6a5acd;
             color: white;
             border: none;
             padding: 8px 25px;
             border-radius: 20px;
             font-weight: bold;
             cursor: pointer;
-            font-size: 13px;
             transition: 0.3s;
         }
-        .btn-copy-nav:hover { background: #836fff; transform: translateY(-2px); }
 
-        /* --- 调整：二维码居中 --- */
+        /* 域名列表样式 */
+        .panel-left .panel-box .row { 
+            min-height: 80px; 
+            padding: 12px 15px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .panel-left .panel-box .row .text { flex: 1; min-width: 0; }
+        .panel-left .panel-box .row .text p.p2 { 
+            font-size: 12px; 
+            color: #bdbdbd; 
+            overflow: hidden; 
+            text-overflow: ellipsis; 
+            white-space: nowrap; 
+        }
+
+        /* 按钮组样式 */
+        .action-area { 
+            display: flex; 
+            align-items: center; 
+            gap: 8px; 
+            flex-shrink: 0;
+        }
+        /* 复制按钮样式 */
+        .btn-mini-copy {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+        }
+        /* 进入按钮样式 */
+        .btn-mini-enter {
+            background: #007bff;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .speed-result { font-size: 10px; min-width: 60px; text-align: right; font-weight: bold; }
+        .speed-result.testing { color: #ffc107; }
+        .speed-result.success { color: #28a745; }
+        .speed-result.error   { color: #dc3545; }
+
+        /* 二维码居中 */
         .qr-section {
             width: 100%;
             display: flex;
             flex-direction: column;
-            align-items: center; /* 居中 */
-            justify-content: center;
-            padding: 30px 0 10px 0;
+            align-items: center;
+            padding: 25px 0;
         }
-        .qr-img {
-            width: 140px;
-            height: 140px;
-            background: white;
-            padding: 10px;
-            border-radius: 12px;
-            display: block;
-        }
-        .qr-text {
-            margin-top: 12px;
-            font-size: 12px;
-            color: rgba(255,255,255,0.6);
-            text-align: center;
-        }
-
-        /* 原始样式逻辑保留 */
-        .header img { width: 150px; height: auto; display: block; margin: 0 auto; }
-        .speed-result { font-size: 11px; color: #ccc; min-width: 90px; display: inline-block; font-weight: bold; margin-right: 8px;}
-        .speed-result.testing { color: #ffc107; }
-        .speed-result.success { color: #28a745; }
-        .speed-result.error   { color: #dc3545; }
-        .action-area { display: flex; align-items: center; margin-left: auto; flex-shrink: 0; }
-        .panel-left .panel-box .row { min-height: 70px; display: flex; padding: 10px 20px; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .panel-left .panel-box .row .text { flex-grow: 1; display: flex; flex-direction: column; gap: 2px; min-width: 150px; }
-        .panel-left .panel-box .row .text p.p2 { font-size: 12px; color: #bdbdbd; word-break: break-all; margin: 0;}
+        .qr-img { width: 130px; height: 130px; background: white; padding: 10px; border-radius: 10px; }
+        .qr-text { margin-top: 10px; font-size: 12px; color: rgba(255,255,255,0.5); }
+        
+        .header img { width: 210px; height: 60px; display: block; margin: 0 auto; }
     </style>
 </head>
 <body>
 <div class="page-body">
     <div class="page-mark"></div>
     <div class="page-center">
-        <div class="header">
-            <!-- Logo 改为居中显示 -->
-            <img alt="Logo" src="img/bea51e2dca5dd1ac3e782268ec5303cf.png" style="width: 210px; height: 60px;">
-        </div>
+        <div class="header"><img alt="Logo" src="img/bea51e2dca5dd1ac3e782268ec5303cf.png"></div>
         <div class="top-line"></div>
 
         <div class="panel-content">
             <div class="panel-left">
-                <!-- 优化后的导航提示框 -->
+                <!-- 顶部收藏提醒 -->
                 <div class="nav-notice">
                     <p>务必保存，永久导航域名</p>
                     <strong id="nav-url">yxxq.site</strong>
@@ -108,7 +131,7 @@
                 </div>
 
                 <div class="title-info">
-                    <div class="title-i"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g opacity="0.4" clip-path="url(#clip0_157_14557)"><path d="M12 22C6.477 22 2 17.523 2 12C2 6.47703 6.477 2.00003 12 2.00003C17.523 2.00003 22 6.47703 22 12C22 17.523 17.523 22 12 22ZM9.71 19.667C8.72341 17.5743 8.15187 15.3102 8.027 13H4.062C4.25659 14.5389 4.89392 15.9882 5.89657 17.1717C6.89922 18.3553 8.22401 19.2222 9.71 19.667ZM10.03 13C10.181 15.439 10.878 17.73 12 19.752C13.1523 17.6766 13.8254 15.3695 13.97 13H10.03ZM19.938 13H15.973C15.8481 15.3102 15.2766 17.5743 14.29 19.667C15.776 19.2222 17.1008 18.3553 18.1034 17.1717C19.1061 15.9882 19.7434 14.5389 19.938 13ZM4.062 11H8.027C8.15187 8.68982 8.72341 6.42572 9.71 4.33303C8.22401 4.77791 6.89922 5.64478 5.89657 6.82833C4.89392 8.01187 4.25659 9.46113 4.062 11ZM10.031 11H13.969C13.8248 8.63063 13.152 6.32356 12 4.24803C10.8477 6.32348 10.1746 8.63055 10.03 11H10.031ZM14.29 4.33303C15.2766 6.42572 15.8481 8.68982 15.973 11H19.938C19.7434 9.46113 19.1061 8.01187 18.1034 6.82833C17.1008 5.64478 15.776 4.77791 14.29 4.33303Z" fill="white"></path></g></svg></div>
+                    <div class="title-i"><svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M12 22C6.477 22 2 17.523 2 12C2 6.477 6.477 2 12 2C17.523 2 22 6.477 22 12C22 17.523 17.523 22 12 22Z" fill="white" opacity="0.4"></path></svg></div>
                     <div class="title-t">快捷访问列表</div>
                 </div>
                 
@@ -116,64 +139,56 @@
                     <!-- 分享行 -->
                     <div class="row">
                         <div class="text">
-                            <p class="p1">将网址分享给好友 <span class="p1span2">推荐</span></p>
+                            <p class="p1">分享本发布页给好友 <span class="p1span2">推荐</span></p>
                             <p class="p2" id="share-url">https://</p> 
                         </div>
                         <div class="action-area">
-                            <span class="speed-result"></span>
-                            <a id="copy-share-link" href="#" class="btn">复制链接</a> 
+                            <a id="copy-share-link" href="javascript:;" class="btn-mini-enter" style="background: #00a0ff;">复制链接</a> 
                         </div>
                     </div>
 
-                    <!-- 动态域名容器 (JS 填充) -->
+                    <!-- 域名列表容器 -->
                     <div id="url-list-container"></div>
 
-                    <!-- 居中的二维码 -->
+                    <!-- 居中二维码 -->
                     <div class="top-line nomp"></div>
                     <div class="qr-section">
-                        <img src="img/qr.png" alt="二维码" class="qr-img">
+                        <img src="img/qr.png" alt="QR" class="qr-img">
                         <div class="qr-text">长按保存二维码或扫描访问本站</div>
                     </div>
                 </div> 
             </div> 
         </div> 
 
-        <div class="foot">
-            ©2025 映像星球. All Rights Reserved
-        </div>
+        <div class="foot">©2025 映像星球. All Rights Reserved</div>
     </div> 
 </div> 
 
 <script src="js/domains.js"></script>
 <script>
-    // 保留原始 shuffle 逻辑
+    // 随机打乱数组
     function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; }
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
     }
 
-    // 保留原始测速逻辑
-    async function runSpeedTest(rowElement) {
-        const resultSpan = rowElement.querySelector('.speed-result');
-        const targetLink = rowElement.querySelector('a');
-        let urlToTest = targetLink.href;
-
-        if (!urlToTest || !urlToTest.startsWith('http')) return;
-        
-        resultSpan.textContent = '测速中...';
+    // 测速逻辑
+    async function runSpeedTest(url, resultSpan) {
+        if (!url.startsWith('http')) return;
+        resultSpan.textContent = '测速中';
         resultSpan.className = 'speed-result testing';
-
         const startTime = performance.now();
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 5000);
-
         try {
-            await fetch(urlToTest, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            await fetch(url, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
             clearTimeout(timeoutId);
             const duration = Math.max(10, Math.floor(performance.now() - startTime));
-            resultSpan.textContent = `延迟 ${duration} ms`;
+            resultSpan.textContent = duration + 'ms';
             resultSpan.className = 'speed-result success';
-        } catch (err) {
-            clearTimeout(timeoutId);
+        } catch (e) {
             resultSpan.textContent = '超时';
             resultSpan.className = 'speed-result error';
         }
@@ -181,40 +196,49 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         // 1. 初始化导航复制
-        const cpNav = new ClipboardJS('#copy-nav-btn');
-        cpNav.on('success', () => alert('导航域名 yxxq.site 复制成功！'));
+        new ClipboardJS('#copy-nav-btn').on('success', () => alert('导航域名 yxxq.site 复制成功！'));
 
-        // 2. 初始化页面分享复制
+        // 2. 页面分享链接
         const currentUrl = window.location.href;
         document.getElementById('share-url').textContent = currentUrl;
-        const cpShare = new ClipboardJS('#copy-share-link', { text: () => currentUrl });
-        cpShare.on('success', () => alert('发布页链接复制成功！'));
+        new ClipboardJS('#copy-share-link', { text: () => currentUrl }).on('success', () => alert('发布页地址已复制'));
 
-        // 3. 动态填充网址列表（保留你原始的 domainList 逻辑）
+        // 3. 动态获取 5 条域名
+        const container = document.getElementById('url-list-container');
         if (typeof domainList !== 'undefined' && Array.isArray(domainList)) {
-            const container = document.getElementById('url-list-container');
             let shuffled = [...domainList];
             shuffleArray(shuffled);
-
-            shuffled.slice(0, 4).forEach((url, index) => {
+            
+            // 选取前 5 个
+            shuffled.slice(0, 5).forEach((url, index) => {
                 const rowWrapper = document.createElement('div');
                 rowWrapper.innerHTML = `
                     <div class="top-line nomp"></div>
                     <div class="row">
                         <div class="text">
-                            <p class="p1">备用网址 ${index + 1} ${index === 0 ? '<span class="p1span">主用</span>' : ''}</p>
+                            <p class="p1">备用网址 ${index + 1} ${index === 0 ? '<span class="p1span">推荐</span>' : ''}</p>
                             <p class="p2">${url}</p>
                         </div>
                         <div class="action-area">
-                            <span class="speed-result"></span>
-                            <a href="${url}" target="_blank" class="btn-down">点击进入</a>
+                            <span class="speed-result">--ms</span>
+                            <button class="btn-mini-copy" data-clipboard-text="${url}">复制</button>
+                            <a href="${url}" target="_blank" class="btn-mini-enter">进入</a>
                         </div>
                     </div>
                 `;
                 container.appendChild(rowWrapper);
-                // 测速
-                setTimeout(() => runSpeedTest(rowWrapper), index * 200);
+                
+                // 执行测速
+                const span = rowWrapper.querySelector('.speed-result');
+                runSpeedTest(url, span);
             });
+
+            // 初始化所有新生成的复制按钮
+            new ClipboardJS('.btn-mini-copy').on('success', (e) => {
+                alert('域名复制成功: ' + e.text);
+            });
+        } else {
+            container.innerHTML = '<div class="row"><p style="color:red;text-align:center;width:100%">js/domains.js 加载失败或数据格式错误</p></div>';
         }
     });
 </script>
