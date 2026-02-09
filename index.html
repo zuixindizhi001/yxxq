@@ -7,9 +7,6 @@
     <link href="css/normalize.css" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/opposans" rel="stylesheet">
     
-    <!-- 更换为更稳定的 CDN 链接 -->
-    <script src="https://cdn.staticfile.org/clipboard.js/2.0.11/clipboard.min.js"></script>
-
     <style>
         :root { --bg-color: #0b0e21; --primary-purple: #7056ff; --text-dim: #a0a5ba; }
         body { background-color: var(--bg-color); background-image: radial-gradient(circle at top, #1e254d 0%, #0b0e21 100%); font-family: 'Opposans', sans-serif; color: #fff; margin: 0; padding: 0; min-height: 100vh; }
@@ -23,11 +20,12 @@
         .header { margin: 20px 0; }
         .header img { width: 180px; height: auto; }
 
-        /* 永久域名大卡片 */
-        .permanent-card { background: rgba(30, 35, 70, 0.7); border: 1px solid rgba(112, 86, 255, 0.4); border-radius: 20px; width: 100%; padding: 25px 0; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-        .permanent-card .hint { font-size: 14px; opacity: 0.8; margin-bottom: 8px; }
-        .permanent-card .domain-name { font-size: 38px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 15px rgba(112, 86, 255, 0.6); }
-        .btn-main { background: var(--primary-purple); color: white; border: none; padding: 10px 35px; border-radius: 25px; font-size: 15px; cursor: pointer; transition: 0.3s; }
+        /* 永久域名大卡片 (严格对照截图) */
+        .permanent-card { background: rgba(30, 35, 70, 0.7); border: 1px solid rgba(112, 86, 255, 0.4); border-radius: 20px; width: 100%; padding: 30px 0; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .permanent-card .hint { font-size: 15px; opacity: 0.9; margin-bottom: 12px; }
+        .permanent-card .domain-name { font-size: 42px; font-weight: bold; margin-bottom: 25px; text-shadow: 0 0 20px rgba(112, 86, 255, 0.7); }
+        .btn-main { background: var(--primary-purple); color: white; border: none; padding: 12px 45px; border-radius: 30px; font-size: 16px; cursor: pointer; transition: 0.3s; font-weight: 500; }
+        .btn-main:active { transform: scale(0.95); opacity: 0.8; }
 
         /* 域名列表 */
         .domain-list { width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 15px; overflow: hidden; }
@@ -38,7 +36,7 @@
         .speed { font-size: 11px; font-weight: bold; min-width: 40px; text-align: right; }
         .speed.good { color: #00ff88; }
         .speed.bad { color: #ff4444; }
-        .btn-sm { padding: 6px 12px; border-radius: 6px; font-size: 12px; text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.1); }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; font-size: 12px; text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.1); cursor: pointer; border:none; }
         .btn-sm.enter { background: var(--primary-purple); }
 
         /* 二维码 */
@@ -54,7 +52,7 @@
 
 <div class="container">
     <!-- 顶部窄条 -->
-    <div class="top-notice-bar copy-btn" data-clipboard-text="yxxq.site">
+    <div class="top-notice-bar" onclick="copyText('yxxq.site')">
         点击复制并保存发布页域名：<b>yxxq.site</b> (建议按 Ctrl+D 收藏)
     </div>
 
@@ -66,12 +64,12 @@
     <div class="permanent-card">
         <div class="hint">务必保存，永久导航域名</div>
         <div class="domain-name">yxxq.site</div>
-        <button class="btn-main copy-btn" data-clipboard-text="yxxq.site">点击复制并收藏</button>
+        <button class="btn-main" onclick="copyText('yxxq.site')">点击复制并收藏</button>
     </div>
 
     <!-- 域名显示区域 -->
     <div class="domain-list" id="domain-list-box">
-        <div style="padding: 30px; text-align: center; color: var(--text-dim);">正在尝试建立连接...</div>
+        <div style="padding: 30px; text-align: center; color: var(--text-dim);">正在连接极速线路...</div>
     </div>
 
     <div class="qr-section">
@@ -82,21 +80,60 @@
     <div class="footer">©2025 映像星球. All Rights Reserved</div>
 </div>
 
-<!-- 1. 先引入域名数据 -->
+<!-- 脚本部分 -->
 <script src="js/domains.js"></script>
 
 <script>
-    // 渲染函数
-    function startRender() {
+    /**
+     * 万能复制函数 - 放弃依赖外部插件，直接原生实现
+     */
+    function copyText(text) {
+        // 创建一个隐藏的 textarea 元素
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        
+        // 确保它在屏幕外，不可见
+        textArea.style.position = "fixed";
+        textArea.style.left = "-9999px";
+        textArea.style.top = "0";
+        document.body.appendChild(textArea);
+        
+        textArea.focus();
+        textArea.select();
+
+        try {
+            // 执行复制命令
+            const successful = document.execCommand('copy');
+            if (successful) {
+                alert('复制成功: ' + text + '\n请按 Ctrl+D 或手动添加收藏夹');
+            } else {
+                alert('复制失败，请长按链接手动复制');
+            }
+        } catch (err) {
+            // 最后的兜底：针对极少数不支持 execCommand 的现代安全浏览器
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('复制成功: ' + text);
+                });
+            } else {
+                alert('您的浏览器不支持自动复制，请手动复制域名');
+            }
+        }
+
+        document.body.removeChild(textArea);
+    }
+
+    // 渲染域名列表
+    function render() {
         const box = document.getElementById('domain-list-box');
-        // 获取数据（兼容多种读取方式）
         const list = window.domainList || (typeof domainList !== 'undefined' ? domainList : []);
 
         if (list.length === 0) {
-            box.innerHTML = '<div style="padding:30px; color:#ff4444; text-align:center;">数据加载失败，请刷新页面</div>';
+            box.innerHTML = '<div style="padding:30px; color:#ff4444; text-align:center;">线路获取失败，请刷新</div>';
             return;
         }
 
+        // 随机取6条
         const selected = [...list].sort(() => 0.5 - Math.random()).slice(0, 6);
         box.innerHTML = ''; 
 
@@ -111,13 +148,13 @@
                 </div>
                 <div class="actions">
                     <span class="speed" id="ms-${i}">检测中</span>
-                    <a href="javascript:;" class="btn-sm copy-btn" data-clipboard-text="${url}">复制</a>
+                    <button class="btn-sm" onclick="copyText('${url}')">复制</button>
                     <a href="${url}" target="_blank" class="btn-sm enter">进入</a>
                 </div>
             `;
             box.appendChild(item);
             
-            // 简单测速
+            // 异步测速
             const sTime = Date.now();
             fetch(url, { mode: 'no-cors', cache: 'no-store' }).then(() => {
                 const diff = Date.now() - sTime;
@@ -130,27 +167,8 @@
         });
     }
 
-    // 初始化复制功能（带容错）
-    function initCopy() {
-        if (typeof ClipboardJS !== 'undefined') {
-            const cp = new ClipboardJS('.copy-btn');
-            cp.on('success', (e) => { alert('复制成功：' + e.text); e.clearSelection(); });
-        } else {
-            // 如果插件加载失败，使用备用原生方案
-            document.querySelectorAll('.copy-btn').forEach(btn => {
-                btn.onclick = function() {
-                    const txt = this.getAttribute('data-clipboard-text');
-                    navigator.clipboard.writeText(txt).then(() => alert('复制成功：' + txt));
-                };
-            });
-        }
-    }
-
-    // 页面完全加载后执行
-    window.addEventListener('load', () => {
-        startRender();
-        initCopy();
-    });
+    // 页面加载完毕执行渲染
+    window.addEventListener('DOMContentLoaded', render);
 </script>
 
 </body>
