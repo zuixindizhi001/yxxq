@@ -1,4 +1,4 @@
 {
-  "android_url": "https://ier.yqk5522.com/qntv_release_v1000_202506281712_qn_0323_02.apk",
-  "ios_url": "https://ier.yqk5522.com/qntv_202504081240_qn_0323_02.mobileconfig"
+  "android_url": "https://d.prnscg.com/tpl2/D4412",
+  "ios_url": "https://d.prnscg.com/tpl2/D4412"
 }
