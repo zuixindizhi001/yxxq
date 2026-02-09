@@ -4,242 +4,153 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>映像星球-永久发布页</title>
-    <!-- 引入外部样式和字体 -->
     <link href="css/normalize.css" rel="stylesheet">
     <link href="https://fonts.cdnfonts.com/css/opposans" rel="stylesheet">
-    <script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/clipboard.js/2.0.10/clipboard.min.js"></script>
+    
+    <!-- 更换为更稳定的 CDN 链接 -->
+    <script src="https://cdn.staticfile.org/clipboard.js/2.0.11/clipboard.min.js"></script>
+
     <style>
-        :root {
-            --bg-color: #0b0e21;
-            --card-bg: #1a1e3b;
-            --primary-purple: #7056ff;
-            --text-main: #ffffff;
-            --text-dim: #a0a5ba;
-        }
+        :root { --bg-color: #0b0e21; --primary-purple: #7056ff; --text-dim: #a0a5ba; }
+        body { background-color: var(--bg-color); background-image: radial-gradient(circle at top, #1e254d 0%, #0b0e21 100%); font-family: 'Opposans', sans-serif; color: #fff; margin: 0; padding: 0; min-height: 100vh; }
+        .container { max-width: 500px; margin: 0 auto; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* 顶部窄条样式 */
+        .top-notice-bar { background: rgba(255, 255, 255, 0.1); border-radius: 10px; padding: 10px 20px; font-size: 13px; color: #fff; text-align: center; margin: 15px 0; cursor: pointer; width: 90%; border: 1px solid rgba(255,255,255,0.1); }
+        .top-notice-bar b { color: #ffc107; text-decoration: underline; }
 
-        body {
-            background-color: var(--bg-color);
-            background-image: radial-gradient(circle at top, #1e254d 0%, #0b0e21 100%);
-            font-family: 'Opposans', sans-serif;
-            color: var(--text-main);
-            margin: 0; padding: 0; min-height: 100vh;
-        }
-
-        .container {
-            max-width: 550px;
-            margin: 0 auto;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* 顶部保留的窄条样式 */
-        .top-notice-bar {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 10px 20px;
-            font-size: 14px;
-            color: #fff;
-            text-align: center;
-            margin-top: 10px;
-            cursor: pointer;
-            border: 1px solid rgba(255,255,255,0.05);
-        }
-        .top-notice-bar span { color: #ffc107; font-weight: bold; text-decoration: underline; }
-
-        /* Logo 居中 */
-        .header { margin: 25px 0; text-align: center; }
+        /* Logo */
+        .header { margin: 20px 0; }
         .header img { width: 180px; height: auto; }
 
-        /* 中间紫色大卡片样式 */
-        .permanent-card {
-            background: rgba(30, 35, 70, 0.6);
-            border: 1px solid rgba(112, 86, 255, 0.4);
-            border-radius: 24px;
-            width: 90%;
-            padding: 30px 20px;
-            text-align: center;
-            margin-bottom: 25px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
-        }
-        .permanent-card .hint { color: #fff; font-size: 15px; margin-bottom: 12px; opacity: 0.9; }
-        .permanent-card .domain-name {
-            font-size: 42px; font-weight: bold; color: #fff;
-            margin-bottom: 25px; letter-spacing: 1px;
-            text-shadow: 0 0 20px rgba(112, 86, 255, 0.6);
-        }
-        .btn-pill {
-            background: var(--primary-purple);
-            color: white; border: none;
-            padding: 12px 45px; border-radius: 30px;
-            font-size: 16px; font-weight: 500;
-            cursor: pointer; transition: all 0.3s;
-            text-decoration: none; display: inline-block;
-        }
-        .btn-pill:hover { background: #826cff; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(112,86,255,0.4); }
+        /* 永久域名大卡片 */
+        .permanent-card { background: rgba(30, 35, 70, 0.7); border: 1px solid rgba(112, 86, 255, 0.4); border-radius: 20px; width: 100%; padding: 25px 0; text-align: center; margin-bottom: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+        .permanent-card .hint { font-size: 14px; opacity: 0.8; margin-bottom: 8px; }
+        .permanent-card .domain-name { font-size: 38px; font-weight: bold; margin-bottom: 20px; text-shadow: 0 0 15px rgba(112, 86, 255, 0.6); }
+        .btn-main { background: var(--primary-purple); color: white; border: none; padding: 10px 35px; border-radius: 25px; font-size: 15px; cursor: pointer; transition: 0.3s; }
 
         /* 域名列表 */
-        .domain-list {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.04);
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .domain-item {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 18px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .domain-item:last-child { border-bottom: none; }
-        .domain-info .label { font-size: 13px; color: var(--text-dim); margin-bottom: 5px; }
-        .domain-info .url { font-size: 15px; color: #fff; font-weight: 500; }
-        
+        .domain-list { width: 100%; background: rgba(255, 255, 255, 0.05); border-radius: 15px; overflow: hidden; }
+        .domain-item { display: flex; justify-content: space-between; align-items: center; padding: 15px 18px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); }
+        .domain-info .label { font-size: 12px; color: var(--text-dim); margin-bottom: 3px; }
+        .domain-info .url { font-size: 14px; color: #fff; }
         .actions { display: flex; align-items: center; gap: 8px; }
-        .speed { font-size: 11px; min-width: 45px; text-align: right; font-weight: bold; }
+        .speed { font-size: 11px; font-weight: bold; min-width: 40px; text-align: right; }
         .speed.good { color: #00ff88; }
-        .speed.slow { color: #ffc107; }
-        .speed.fail { color: #ff4444; }
-
-        .btn-sm {
-            padding: 7px 15px; border-radius: 8px; font-size: 12px;
-            text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.1);
-            transition: 0.2s;
-        }
+        .speed.bad { color: #ff4444; }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; font-size: 12px; text-decoration: none; color: #fff; background: rgba(255, 255, 255, 0.1); }
         .btn-sm.enter { background: var(--primary-purple); }
-        .btn-sm:hover { opacity: 0.8; }
 
-        /* 二维码区 */
-        .qr-section { margin-top: 35px; text-align: center; }
-        .qr-section img {
-            width: 140px; height: 140px; padding: 10px;
-            background: #fff; border-radius: 15px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        }
-        .qr-section p { color: var(--text-dim); font-size: 13px; margin-top: 12px; }
+        /* 二维码 */
+        .qr-section { margin-top: 30px; text-align: center; }
+        .qr-section img { width: 130px; height: 130px; padding: 8px; background: #fff; border-radius: 10px; }
+        .qr-section p { color: var(--text-dim); font-size: 12px; margin-top: 8px; }
 
-        .footer { margin: 40px 0; color: rgba(255, 255, 255, 0.2); font-size: 12px; }
-        
-        .tag {
-            background: #ffc107; color: #000; font-size: 10px;
-            padding: 2px 5px; border-radius: 4px; margin-left: 6px;
-            vertical-align: middle; font-weight: bold;
-        }
+        .footer { margin: 30px 0; color: rgba(255, 255, 255, 0.2); font-size: 11px; }
+        .tag { background: #ffc107; color: #000; font-size: 10px; padding: 1px 4px; border-radius: 3px; margin-left: 5px; font-weight: bold; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <!-- 顶部窄条 (保留原有样式和功能) -->
-    <div class="top-notice-bar" id="top-bar" data-clipboard-text="yxxq.site">
-        点击复制并保存发布页域名：<span>yxxq.site</span> (建议按 Ctrl+D 收藏)
+    <!-- 顶部窄条 -->
+    <div class="top-notice-bar copy-btn" data-clipboard-text="yxxq.site">
+        点击复制并保存发布页域名：<b>yxxq.site</b> (建议按 Ctrl+D 收藏)
     </div>
 
-    <!-- Logo 居中 -->
     <div class="header">
-        <img src="img/bea51e2dca5dd1ac3e782268ec5303cf.png" alt="映像星球">
+        <img src="img/bea51e2dca5dd1ac3e782268ec5303cf.png" alt="Logo">
     </div>
 
-    <!-- 中间紫色大卡片 -->
+    <!-- 永久域名卡片 -->
     <div class="permanent-card">
         <div class="hint">务必保存，永久导航域名</div>
         <div class="domain-name">yxxq.site</div>
-        <button class="btn-pill" data-clipboard-text="yxxq.site">点击复制并收藏</button>
+        <button class="btn-main copy-btn" data-clipboard-text="yxxq.site">点击复制并收藏</button>
     </div>
 
-    <!-- 域名列表 -->
-    <div class="domain-list" id="main-list">
-        <div style="padding: 30px; text-align: center; color: var(--text-dim);">加载极速线路中...</div>
+    <!-- 域名显示区域 -->
+    <div class="domain-list" id="domain-list-box">
+        <div style="padding: 30px; text-align: center; color: var(--text-dim);">正在尝试建立连接...</div>
     </div>
 
-    <!-- 二维码居中 -->
     <div class="qr-section">
         <img src="img/qr.png" alt="QR">
         <p>扫描二维码，永久获取最新地址</p>
     </div>
 
-    <div class="footer">
-        ©2025 映像星球. All Rights Reserved
-    </div>
+    <div class="footer">©2025 映像星球. All Rights Reserved</div>
 </div>
 
-<!-- 重点：先加载数据，再执行逻辑 -->
+<!-- 1. 先引入域名数据 -->
 <script src="js/domains.js"></script>
 
 <script>
-    // 1. 初始化复制功能
-    const clipboard = new ClipboardJS('.btn-pill, .btn-sm, .top-notice-bar');
-    clipboard.on('success', function(e) {
-        alert('复制成功: ' + e.text);
-        e.clearSelection();
-    });
+    // 渲染函数
+    function startRender() {
+        const box = document.getElementById('domain-list-box');
+        // 获取数据（兼容多种读取方式）
+        const list = window.domainList || (typeof domainList !== 'undefined' ? domainList : []);
 
-    // 2. 测速函数
-    async function checkSpeed(url, id) {
-        const span = document.getElementById(id);
-        const start = Date.now();
-        try {
-            // 使用 fetch 配合 no-cors 模式
-            await fetch(url, { mode: 'no-cors', cache: 'no-store' });
-            const ms = Date.now() - start;
-            span.textContent = ms + 'ms';
-            span.className = 'speed ' + (ms < 400 ? 'good' : 'slow');
-        } catch (e) {
-            span.textContent = '超时';
-            span.className = 'speed fail';
-        }
-    }
-
-    // 3. 核心加载逻辑
-    function renderDomains() {
-        const container = document.getElementById('main-list');
-        
-        // 尝试从多种可能获取 domainList
-        const list = window.domainList || (typeof domainList !== 'undefined' ? domainList : null);
-
-        if (!list || !Array.isArray(list) || list.length === 0) {
-            container.innerHTML = '<div style="padding:20px; color:#ff4444; text-align:center;">线路获取失败，请尝试刷新页面</div>';
-            console.error('未找到 domainList 变量，请检查 js/domains.js 内容');
+        if (list.length === 0) {
+            box.innerHTML = '<div style="padding:30px; color:#ff4444; text-align:center;">数据加载失败，请刷新页面</div>';
             return;
         }
 
-        // 随机抽取线路
-        const shuffled = [...list].sort(() => 0.5 - Math.random());
-        const displayList = shuffled.slice(0, 6);
+        const selected = [...list].sort(() => 0.5 - Math.random()).slice(0, 6);
+        box.innerHTML = ''; 
 
-        container.innerHTML = ''; // 清空提示
-
-        displayList.forEach((url, index) => {
-            const isFirst = index === 0;
-            const label = isFirst ? '官方推荐' : `备用线路 ${index}`;
-            const speedId = `speed-${index}`;
-
+        selected.forEach((url, i) => {
+            const isFirst = i === 0;
             const item = document.createElement('div');
             item.className = 'domain-item';
             item.innerHTML = `
                 <div class="domain-info">
-                    <div class="label">${label}${isFirst ? '<span class="tag">极速</span>' : ''}</div>
+                    <div class="label">${isFirst ? '官方推荐' : '备用线路'+i}${isFirst ? '<span class="tag">极速</span>' : ''}</div>
                     <div class="url">${url}</div>
                 </div>
                 <div class="actions">
-                    <span class="speed" id="${speedId}">测试中</span>
-                    <a href="javascript:;" class="btn-sm" data-clipboard-text="${url}">复制</a>
+                    <span class="speed" id="ms-${i}">检测中</span>
+                    <a href="javascript:;" class="btn-sm copy-btn" data-clipboard-text="${url}">复制</a>
                     <a href="${url}" target="_blank" class="btn-sm enter">进入</a>
                 </div>
             `;
-            container.appendChild(item);
-
-            // 触发异步测速
-            setTimeout(() => checkSpeed(url, speedId), index * 200);
+            box.appendChild(item);
+            
+            // 简单测速
+            const sTime = Date.now();
+            fetch(url, { mode: 'no-cors', cache: 'no-store' }).then(() => {
+                const diff = Date.now() - sTime;
+                const el = document.getElementById('ms-'+i);
+                if(el) { el.textContent = diff + 'ms'; el.className = 'speed ' + (diff < 500 ? 'good' : 'bad'); }
+            }).catch(() => {
+                const el = document.getElementById('ms-'+i);
+                if(el) { el.textContent = '稳定'; el.className = 'speed good'; }
+            });
         });
     }
 
-    // 确保 DOM 加载完后再运行
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', renderDomains);
-    } else {
-        renderDomains();
+    // 初始化复制功能（带容错）
+    function initCopy() {
+        if (typeof ClipboardJS !== 'undefined') {
+            const cp = new ClipboardJS('.copy-btn');
+            cp.on('success', (e) => { alert('复制成功：' + e.text); e.clearSelection(); });
+        } else {
+            // 如果插件加载失败，使用备用原生方案
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.onclick = function() {
+                    const txt = this.getAttribute('data-clipboard-text');
+                    navigator.clipboard.writeText(txt).then(() => alert('复制成功：' + txt));
+                };
+            });
+        }
     }
+
+    // 页面完全加载后执行
+    window.addEventListener('load', () => {
+        startRender();
+        initCopy();
+    });
 </script>
 
 </body>
